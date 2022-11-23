@@ -1,0 +1,100 @@
+def display(game):
+    from IPython.display import clear_output
+    clear_output()
+    print(game[1]+'|'+game[2]+'|'+game[3])
+    print("- - -")
+    print(game[4]+'|'+game[5]+'|'+game[6])
+    print("- - -")
+    print(game[7]+'|'+game[8]+'|'+game[9])
+    
+g=['#',' ',' '," ",' ',' ',' ',' ',' ',' ']
+def init_play():
+    from IPython.display import clear_output
+    player='n'
+    while player not in ['x','o']:
+        player=input("Enter the choice (x or o) : ")
+        if player not in ['x','o']:
+            clear_output()
+            print("Enter correct choice")
+    return player       
+def play(player,game):
+    pos='wrong'
+    flag=0
+    from IPython.display import clear_output
+    while pos.isdigit()==False or flag==0:
+        pos=input('Enter the position(1-9) : ')
+        if pos.isdigit()==True:
+            if int(pos) in range(1,10):
+                if game[int(pos)] not in ['x','o']:
+                    flag=1
+                else:
+                    print("Position already filled ,Enter another position")
+            else:
+                clear_output()
+                print("Position not in range")
+        else:
+            clear_output()
+            print("Wrong position ,enter correct position")
+    clear_output()    
+    game[int(pos)]=player
+    display(game)
+def doplay():
+    pl='no'
+    while pl not in ['y','n']:
+        pl=input("Do you wanna play ('y' or 'n') : ")
+        if pl not in ['y','n']:
+            print("wrong choice ,Enter the correct choice('y' or 'n') : ")
+    return(pl)
+    
+        
+def condition(g,play):
+    for i,j,k in [1,2,3],[4,5,6],[7,8,9]:
+        if g[i]==g[j] and g[j]==g[k] and g[i] ==play:
+            print(play+" Won")
+            return 0
+    for i,j,k in [1,4,7],[2,5,8],[3,6,9]:
+        if g[i]==g[j] and g[j]==g[k] and g[i] ==play:
+            print(play+" Won")
+            return 0
+    for i,j,k in [1,5,9],[3,5,7]:
+        if g[i]==g[j] and g[j]==g[k] and g[i] ==play:
+            print(play+" Won")
+            return 0
+    c=0
+    for i in range(1,10):
+        if g[i] in ['x','o']:
+            c=+1
+    if c==9:
+        print("End of game ,No more choices ")
+        return 0
+    
+g=['#',' ',' '," ",' ',' ',' ',' ',' ',' ']
+#display(g)
+player1=init_play()
+if player1=='x':
+    player2='o'
+else:
+    player2='x'
+cond='no'
+while cond!='n':
+    
+    for i in range(9):
+        if i in [0,2,4,6,8]:
+            playing=player1
+        else:
+            playing=player2
+        play(playing,g)
+        test=condition(g,playing)
+        if test==0:
+            break
+    cond=doplay()
+o|x|x
+- - -
+o|o|x
+- - -
+x|o|x
+x Won
+Do you wanna play ('y' or 'n') : nn
+wrong choice ,Enter the correct choice('y' or 'n') : 
+Do you wanna play ('y' or 'n') : n
+ 
